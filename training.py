@@ -95,7 +95,7 @@ bert_pretraining = BertForPretraining(
 )
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--num_epochs', default = 10)
+parser.add_argument('--num_epochs', type = int ,default = 10)
 parser.add_argument('--checkpoint', default = None)
 args = parser.parse_args()
 
