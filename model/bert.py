@@ -144,7 +144,7 @@ class BertForPretraining(nn.Module):
         #mlm_target = org_nsp_sequence, input_tensor = masked_nsp_sequence
         #segment_tensor = segment_ids, cls_target
         mlm_target, input_tensor, segment_tensor, cls_target = batch
-
+        '''
         #pass original_nsp_sequence (without masking) to get nsp_outputs
         nsp_outputs, _ = self(
             input_tensor = mlm_target, segment_tensor = segment_tensor
@@ -158,7 +158,7 @@ class BertForPretraining(nn.Module):
         nsp_outputs, mlm_outputs = self(
             input_tensor = input_tensor, segment_tensor = segment_tensor
         )
-        '''
+        
         nsp_loss = self.nsp_loss_fn(nsp_outputs, cls_target)
         mlm_loss = self.mlm_loss_fn(
             mlm_outputs.transpose(-2,-1), mlm_target
@@ -200,6 +200,7 @@ class BertForPretraining(nn.Module):
     def validation_step(self, batch):
         mlm_target, input_tensor, segment_tensor, cls_target = batch
         with torch.no_grad():
+            '''
             _, mlm_outputs = self(
                 input_tensor = input_tensor, segment_tensor = segment_tensor
             )
@@ -210,7 +211,7 @@ class BertForPretraining(nn.Module):
             nsp_outputs, mlm_outputs = self(
                 input_tensor = input_tensor, segment_tensor = segment_tensor
             )
-            '''
+            
         nsp_loss = self.nsp_loss_fn(nsp_outputs, cls_target)
         mlm_loss = self.mlm_loss_fn(
             mlm_outputs.transpose(-2,-1), mlm_target
