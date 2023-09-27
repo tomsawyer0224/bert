@@ -102,7 +102,7 @@ args = parser.parse_args()
 trainer = Trainer(num_epochs = args.num_epochs)
 trainer.train(
     model = bert_pretraining,
-    train_loader = test_pre_loader,
+    train_loader = train_pre_loader,
     val_loader = val_pre_loader,
     checkpoint = args.checkpoint
 )
