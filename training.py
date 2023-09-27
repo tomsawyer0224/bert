@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader
 from torchtext.data.utils import get_tokenizer
-
+import argparse
 #from data.datasets import IMDBpretraining, IMDBforCLS, IMDBforMLM
 from data import datasets
 from special_vars import CLS,PAD,MASK,SEP,UNK,CLS_ID,PAD_ID,MASK_ID,SEP_ID,UNK_ID,MASK_PERCENTAGE
@@ -94,9 +94,15 @@ bert_pretraining = BertForPretraining(
     backbone = backbone
 )
 
-trainer = Trainer(num_epochs = 10)
+parser = argparse.ArgumentParser()
+parser.add_argument('--num_epochs', default = 10)
+parser.add_argument('--checkpoint', default = None)
+args = parser.parse_args()
+
+trainer = Trainer(num_epochs = args.num_epochs)
 trainer.train(
     model = bert_pretraining,
     train_loader = test_pre_loader,
-    val_loader = val_pre_loader
+    val_loader = val_pre_loader,
+    checkpoint = args.checkpoint
 )
