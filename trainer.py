@@ -52,6 +52,10 @@ class Trainer(nn.Module):
                     val_pbar.set_postfix(model.on_val_epoch_end(val_epoch_outputs))
         model_name = model.__class__.__name__
         checkpoint_name = model_name + f'_at_epoch_{self.num_epochs}' + '.pt'
+        os.makedirs(
+            os.path.join(self.root_dir, 'checkpoint'),
+            exist_ok = True
+        )
         checkpoint_path = os.path.join(self.root_dir, 'checkpoint', checkpoint_name)
         torch.save(model.state_dict(), checkpoint_path)
     
